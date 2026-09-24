@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #fce4ec;
+            background-image: radial-gradient(#f8bbd0 2px, transparent 2px);
+            background-size: 30px 30px;
+            overflow: hidden;
+            height: 100vh;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        #countdown-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: black; display: flex; justify-content: center; align-items: center; z-index: 3000;
+        }
+        #timer-text { color: white; font-size: 100px; }
+
+        #interaction-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #fce4ec; display: none; justify-content: center; align-items: center; z-index: 2500;
+        }
+        .pink-box {
+            background: white; padding: 30px; border-radius: 25px; border: 4px solid #ff80ab;
+            text-align: center; width: 85%; max-width: 420px; min-height: 200px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .pink-box h2 { color: #ff4081; font-size: 1.3rem; line-height: 1.4; }
+        
+        .btn-group { margin-top: 25px; display: flex; justify-content: center; gap: 20px; opacity: 0; transition: 0.5s; width: 100%; }
+        .btn-choice { padding: 10px 25px; border: none; border-radius: 20px; cursor: pointer; font-family: 'Fredoka One'; font-size: 16px; }
+        .btn-yes { background: #ff4081; color: white; box-shadow: 0 4px 0 #d81b60; }
+        .btn-no { background: #eeeeee; color: #777; position: relative; z-index: 3500; }
+
+        .main-ui { display: flex; height: 100vh; width: 100%; justify-content: space-around; align-items: center; padding: 0 5%; }
+        .left { flex: 1.5; display: flex; flex-direction: column; align-items: flex-start; z-index: 10; }
+        .happy-text { font-size: 100px; color: white; line-height: 1; }
+        .birthday-text { font-size: 90px; color: #ff0000; line-height: 1; }
+        .date-badge { background: #ff4081; color: white; padding: 12px 30px; border-radius: 50px; margin-top: 15px; font-size: 1.8rem; box-shadow: 0 8px 0px #d81b60; }
+        .btn-reveal { margin-top: 25px; padding: 15px 35px; border: none; background: white; color: #ff4081; border-radius: 50px; cursor: pointer; font-size: 1.2rem; opacity: 0; transition: 1s; box-shadow: 0 6px 0px #eeeeee; }
+
+        .right { flex: 1; opacity: 0; transform: translateY(600px); transition: 2s; text-align: center; }
+        .photo-circle { width: 300px; height: 300px; border: 12px solid white; border-radius: 50%; overflow: hidden; }
+        .photo-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .name-tag { background: white; padding: 10px 40px; border-radius: 30px; margin-top: -25px; font-size: 1.6rem; color: #333; display: inline-block; }
+        
+        #message-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 40px; border-radius: 30px; box-shadow: 0 0 100px rgba(0,0,0,0.5); z-index: 4000; text-align: center; width: 350px; max-height: 80vh; overflow-y: auto; }
+        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3999; }
+        .balloon-fly { position: absolute; bottom: -100px; font-size: 50px; animation: floatUp 5s linear forwards; }
+        @keyframes floatUp { to { transform: translateY(-120vh) translateX(60px); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music">
+        <source src="audio/song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="countdown-overlay"><div id="timer-text">3</div></div>
+
+    <div id="interaction-overlay">
+        <div class="pink-box">
+            <h2 id="pink-msg"></h2>
+            <div id="btn-container" class="btn-group">
+                <button class="btn-choice btn-yes" onclick="startSurprise()">Yes! 😍</button>
+                <button id="no-btn" class="btn-choice btn-no" onmouseover="moveButton()">No 😜</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="balloons-layer"></div>
+    <div id="overlay"></div>
+
+    <div class="main-ui">
+        <div class="left">
+            <h1 class="happy-text" id="type-happy"></h1>
+            <h1 class="birthday-text" id="type-birthday"></h1>
+            <div id="date" class="date-badge" style="display: none;"></div>
+            <button id="open-btn" class="btn-reveal">Click here </button>
+        </div>
+        <div class="right" id="right-ui">
+            <div class="photo-circle"><img src="image/project 1.jpg" alt="pic"></div>
+            <div class="name-tag">Riya❤️</div>
+        </div>
+    </div>
+
+    <div id="message-box">
+        <h2 style="color: #ff4081; margin-bottom: 15px;">For you babee!! 🎂</h2>
+        <p style="text-align: left; line-height: 1.6;">Happy Birthday❤️<br><br>
+
+You are not just my life partner, you are my heart, my happiness, and my biggest blessing.
+Every moment with you feels special, and every day I thank God for sending you into my life.
+
+May your smile always stay as beautiful as today, and may your life be filled with endless love, joy, and dreams co
+I love you more than words can ever express.
+
+<br><br>Happy Birthday, Riya</p>
+<!-- Include name of the person in ... -->
+        <button id="close-btn" style="margin-top: 20px; padding: 10px 25px; background: #ff4081; color: white; border: none; border-radius: 20px;">Love you! ✨</button>
+    </div>
+
+    <script>
+        const happyStr = "HAPPY", birthdayStr = "BIRTHDAY", dateStr = "14 february ";
+        let hIdx = 0, bIdx = 0, dIdx = 0;
+        // put your birthday date
+
+        function moveButton() {
+            const btn = document.getElementById('no-btn');
+            btn.style.position = 'fixed';
+            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+        }
+
+        function typeWriter(text, elementId, callback) {
+            let i = 0; const el = document.getElementById(elementId); el.innerHTML = "";
+            function type() {    
+                if (i < text.length) { el.innerHTML += text.charAt(i); i++; setTimeout(type, 40); }
+                else if (callback) setTimeout(callback, 800);
+            }
+            type();
+        }
+
+        window.onload = () => {
+            let count = 3;
+            const timer = setInterval(() => {
+                count--;
+                if (count > 0) document.getElementById('timer-text').innerText = count;
+                else {
+                    clearInterval(timer);
+                    document.getElementById('countdown-overlay').style.display = 'none';
+                    document.getElementById('interaction-overlay').style.display = 'flex';
+                    
+                    // Re-added the missing line here
+                    typeWriter("It's your birthday yeyey! 🎂", "pink-msg", () => {
+                        typeWriter(" to make something special for you, as you are in my life... ❤️", "pink-msg", () => {
+                            typeWriter("Do you wanna see what I made?", "pink-msg", () => {
+                                document.getElementById('btn-container').style.opacity = "1";
+                            });
+                        });
+                    });
+                }
+            }, 1000);
+        };
+
+        function startSurprise() {
+            document.getElementById('interaction-overlay').style.display = 'none';
+            const music = document.getElementById('bg-music');
+            
+            // Set timing: Start at 30s, Stop at 78s (1:18)
+            music.currentTime = 30; 
+            music.play();
+            music.ontimeupdate = function() {
+                if (music.currentTime >= 78) { music.pause(); }
+            };
+
+            typeHappy();
+        }
+
+        function typeHappy() {
+            if (hIdx < happyStr.length) { document.getElementById('type-happy').innerHTML += happyStr.charAt(hIdx); hIdx++; setTimeout(typeHappy, 120); }
+            else typeBirthday();
+        }
+
+        function typeBirthday() {
+            if (bIdx < birthdayStr.length) { document.getElementById('type-birthday').innerHTML += birthdayStr.charAt(bIdx); bIdx++; setTimeout(typeBirthday, 120); }
+            else { document.getElementById('date').style.display = "inline-block"; typeDate(); }
+        }
+
+        function typeDate() {
+            if (dIdx < dateStr.length) { document.getElementById('date').innerHTML += dateStr.charAt(dIdx); dIdx++; setTimeout(typeDate, 120); }
+            else { 
+                document.getElementById('right-ui').style.opacity = "1"; document.getElementById('right-ui').style.transform = "translateY(0)";
+                setTimeout(() => { document.getElementById('open-btn').style.opacity = "1"; }, 800);
+                createBalloons();
+            }
+        }
+
+        document.getElementById('open-btn').onclick = () => { document.getElementById('message-box').style.display = "block"; document.getElementById('overlay').style.display = "block"; };
+        document.getElementById('close-btn').onclick = () => { document.getElementById('message-box').style.display = "none"; document.getElementById('overlay').style.display = "none"; };
+
+        function createBalloons() {
+            const container = document.getElementById('balloons-layer');
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const b = document.createElement('div'); b.className = 'balloon-fly';
+                    b.style.left = Math.random() * 100 + "vw";
+                    b.innerText = ['🎈', '💖', '✨'][Math.floor(Math.random() * 3)];
+                    container.appendChild(b);
+                }, i * 200);
+            }
+        }
+    </script>
+</body>
+</html>

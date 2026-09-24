@@ -1,0 +1,167 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+    color: #333;
+    overflow-x: hidden;
+}
+
+/* Animated Gradient Background */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%;Since no specific HTML structure or design requirements were provided, here is a foundational, clean modern starter boilerplate for `style.css` that resets default browser styles, sets up dark/light mode CSS variables, and lays out common typography and layout utilities:
+
+```css
+/* ==========================================================================
+   1. CSS RESET & GLOBAL VARIABLES
+   ========================================================================== */
+:root {
+  /* Color Palette */
+  --primary-color: #0066cc;
+  --primary-hover: #0052a3;
+  --bg-color: #f8f9fa;
+  --surface-color: #ffffff;
+  --text-color: #212529;
+  --text-muted: #6c757d;
+  --border-color: #e9ecef;
+
+  /* Typography */
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --base-font-size: 1rem;
+  --line-height: 1.6;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2.5rem;
+
+  /* Utilities */
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --transition-speed: 0.2s ease;
+}
+
+/* Optional Dark Theme (matches system preference) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #121212;
+    --surface-color: #1e1e1e;
+    --text-color: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --border-color: #2d2d2d;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================================
+   2. BASE STYLES
+   ========================================================================== */
+body {
+  font-family: var(--font-family);
+  font-size: var(--base-font-size);
+  line-height: var(--line-height);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: var(--spacing-md);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 700;
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+
+a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================================================================
+   3. COMPONENTS & UTILITIES
+   ========================================================================== */
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Cards */
+.card {
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-lg);
+  box-shadow: var(--box-shadow);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  border: none;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  transition: background-color var(--transition-speed);
+}
+
+.btn:hover {
+  background-color: var(--primary-hover);
+  text-decoration: none;
+}
+
+/* Flexbox / Grid Helpers */
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+}
